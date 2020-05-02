@@ -83,6 +83,26 @@ int main() {
 			player.IsHit();
 			healthBar.setSize(sf::Vector2f(healthx, healthy));	
 		}
+		
+	// check player vs enemyBullets
+
+	for (int j = 0; j < boss.getBullets().size(); j++)
+		if (player.getGlobalBounds().intersects(boss.getBullets()[j].getSprite().getGlobalBounds())) {
+			player.hit;
+			boss.getBullets().erase(boss.getBullets().begin() + j);
+			j--;
+				}
+		}
+	}
+	// check playerBullets vs enemy
+	for (int i = 0; i < player.getBullets().size(); i++) {
+		if (player.getBullets()[i].getSprite().getGlobalBounds().intersects(boss.getSprite().getGlobalBounds())) {
+			player.getBullets().erase(player.getBullets().begin() + i);
+			boss.hit();
+			i--;
+				}
+	}
+		
 	//clears window
 		window.clear();
 	
