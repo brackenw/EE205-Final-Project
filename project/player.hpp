@@ -9,6 +9,14 @@ class Player {
 		float health;
 		float speed;
 		int direction;
+	
+	//added private variables for player attack
+	std::vector<Bullet> PlayerBullets; //vector of bullets
+
+	sf::Clock ReloadTimer; 				//reload timer to track time since last shot
+	float ReloadTime;					//Reload time to stop bullet spam
+	int MaxBullets;                     //Max ammo                              
+	float BulletSpeed;
 			
 		
 	public:
@@ -23,4 +31,6 @@ class Player {
 		void Attack();
 		void IsHit();	
 
+	//added getter for bullet vector
+		std::vector<Bullet> &getBullets();
 };
