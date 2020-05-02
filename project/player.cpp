@@ -11,6 +11,11 @@ Player::Player() {
 	direction = stop;
 	hit = 0;
 	speed = 5;
+	//attack definitions
+	ReloadTime = 0.05f;
+	MaxBullets = 3;
+	BulletSpeed = 50;
+	BulletTexture.loadFromFile("Images/PlayerBullet.png");
 }
 
 void Player::Move() {
@@ -59,12 +64,17 @@ void Player::SetDirection(sf::Keyboard::Key x) {
 //REWRITE THIS TO BE PUT IN MAIN PROGRAM
 //iterates through vector of bullets, checks if active, and moves it if so
 //Spacebar should make the vector push an active bullet 
-void Player::Attack() {
-	std::cout << "DEBUG: entering shoot function" << std::endl;
-	//only moves for brief period of time, figure out how to keep running shoot function
-	
-	
-	return;
+
+std::vector<Bullet> &Player::getBullets() { return PlayerBullets; } //bullet getter
+void Player::Attack() {											
+	if (ReloadTimer.getElapsedTime().asSeconds() > ReloadTime && PlayerBullets.size() < MaxBullets ) { //check for available ammo and if ready to fire
+			sf::Vector2f Nose(getGlobalBounds().left + getGlobalBounds().width / 2, getGlobalBounds().top); //define nose of ship
+			PlayerBullets.push_back(Bullet(BulletTexture, sf::Vector2f(0, -BulletSpeed)));	//adds bullet to stack
+			int last = PlayerBullets.size() - 1;											//sets new bullet to last
+			PlayerBullets[last].getSprite().setPosition(Nose.x - PlayerBullets[last].getSprite().getGlobalBounds().width / 2, Nose.y); //places bullet at nose
+		
+	}
+	ReloadTimer.restart(); //reloads ammo
 }
 
 void Player::IsHit() {
