@@ -10,9 +10,30 @@ Enemy::Enemy() {
 	enemypos = enemysprt.getPosition();
 	health = 50;
 	dead = 0;
+	//added enemy attack definitions 
+	BulletSpeed = 50;
+	bulletTexture.loadFromFile("Images/EnemyBullet.png");
+	MaxBullets = 3;
+
+	attackTime = .1f;
+	
 }
 
+std::vector<Bullet> &Enemy::getBullets() { return EnemyBullets; }
+
 void Enemy::Attack() {
+if (ReloadTimer.getElapsedTime().asSeconds() > attackTime && EnemyBullets.size() < MaxBullets ) { 
+	Bullet Enemy::Bullet(sf::Vector2f EnemyPosition, sf::Vector2f Player) {
+	float x, y, xVel, yVel, mag;
+	x = std::abs(player.getPosition().x - boss.getPosition.x);
+	y = std::abs(player.getPosition().y - boss.getPosition.y);
+	mag = sqrt(x*x+y*y);
+	xVel = (x / mag) *  BulletSpeed;
+	yVel = (y / mag) *  BulletSpeed;
+	return Bullet(bulletTexture, sf::Vector2f(xVel, yVel));
+}
+	ReloadTimer.restart(); //reloads ammo
+}
 
 }
 //test for bullet collision in main program, call if true
